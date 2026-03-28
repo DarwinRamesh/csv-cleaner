@@ -75,7 +75,7 @@ func handleNullValues(records [][]string)[][]string {
 		for j := range records [i] {
 				
 			switch strings.ToLower(records[i][j]) {
-			case "n/a", "none", "null", "-", "na":
+			case "n/a", "none", "null", "-", "na","error","unknown":
     	records[i][j] = ""
 		}
 	}
