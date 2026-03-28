@@ -1,7 +1,6 @@
 # csv-cleaner
 
-A primtive and performant csv cleaner written in GOLang
-
+A primtive and performant .csv cleaner written in Go
 ## How to use 
 
 ```bash
