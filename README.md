@@ -21,6 +21,8 @@ The program by default prints everything it processes to the terminal. You can r
 
 Performance and maintainability.
 
+## Attributions
 
+dirty_cafe_sales.csv is a dataset pulled from Kaggle (https://www.kaggle.com/datasets/ahmedmohamed2003/cafe-sales-dirty-data-for-cleaning-training)
 
 
