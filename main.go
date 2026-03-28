@@ -21,9 +21,11 @@ func main() {
 
 	records := readCsv(file_path)
 
-	cleanWhiteSpace(records)
-	handleNullValues(records)
-	normalizeDates(records)
+	records = cleanWhiteSpace(records)
+	records = handleNullValues(records)
+	records = normalizeDates(records)
+
+	writeCsv(records, "output.csv")
 	
 
 	fmt.Println(records)
@@ -94,10 +96,23 @@ func normalizeDates(records[][]string)[][]string{
 					break
 				}
 			}
-			
-		
 		}
 	}
 	return records
 }
 
+func writeCsv(records[][]string, filename string){
+	file, err := os.Create(filename)
+	if err != nil{
+		log.Fatal(err)
+	}
+	defer file.Close()
+	writer := csv.NewWriter(file)
+
+	writer.WriteAll(records)
+	writer.Flush()
+	err = writer.Error()
+	if err != nil{
+		log.Fatal(err)
+	}
+}
