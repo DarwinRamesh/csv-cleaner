@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -15,11 +16,15 @@ func main() {
 	if len(os.Args) < 2 {
 		log.Fatal("Usage : ./program [file_path]")
 	}
+
 	file_path := os.Args[1]
 
 	records := readCsv(file_path)
 
 	cleanWhiteSpace(records)
+	handleNullValues(records)
+	normalizeDates(records)
+	
 
 	fmt.Println(records)
 
@@ -61,3 +66,38 @@ func cleanWhiteSpace(records [][]string) [][]string {
 	}
 	return records
 }
+
+func handleNullValues(records [][]string)[][]string {
+	
+	for i := range records { 
+		for j := range records [i] {
+				
+			switch strings.ToLower(records[i][j]) {
+			case "n/a", "none", "null", "-", "na":
+    	records[i][j] = ""
+		}
+	}
+}
+	return records
+}
+
+func normalizeDates(records[][]string)[][]string{
+	
+	layouts := []string{"02/01/2006", "2006/01/02", "2006-01-02"}
+
+	for i := range records{
+		for j := range records [i]{
+			for _, layout := range layouts{
+				t, err := time.Parse(layout, records[i][j])
+				if err == nil{
+					records[i][j] = t.Format("2006-01-02")
+					break
+				}
+			}
+			
+		
+		}
+	}
+	return records
+}
+
